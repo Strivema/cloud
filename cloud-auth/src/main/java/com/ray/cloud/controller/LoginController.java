@@ -1,11 +1,16 @@
 package com.ray.cloud.controller;
 
 import com.google.code.kaptcha.Producer;
+import com.ray.cloud.core.HttpResult;
+import com.ray.cloud.security.JwtAuthenticationToken;
 import com.ray.cloud.utils.IOUtils;
+import com.ray.cloud.utils.SecurityUtils;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
@@ -38,7 +43,16 @@ public class LoginController {
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, "jpg", out);
         IOUtils.closeQuietly(out);
-
     }
 
+    @PostMapping("/login")
+    @SneakyThrows
+    public HttpResult login(@RequestParam("name") String name,
+                            @RequestParam("password") String password,
+                            HttpServletRequest request) {
+        JwtAuthenticationToken token = SecurityUtils.login(request, name, password, authenticationManager);
+
+        return HttpResult.ok(token);
+
+    }
 }
