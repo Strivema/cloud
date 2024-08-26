@@ -29,7 +29,7 @@
         <jooq.version>3.11.11</jooq.version>
         <zipkin.version>2.12.2</zipkin.version>
         <zipkin-storage-mysql.version>2.8.4</zipkin-storage-mysql.version>
-        <swagger.version>2.8.0</swagger.version>
+        <swagger.version>2.10.0</swagger.version>
         <docker.image.prefix>cloud</docker.image.prefix>
 
     </properties>
